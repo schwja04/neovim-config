@@ -7,4 +7,7 @@ return {
         "MunifTanjim/nui.nvim",
         "3rd/image.nvim", -- Optional image support
     },
+    config =function ()
+        vim.keymap.set("n", "<leader>n", ":Neotree filesystem reveal left<CR>")
+    end
 }

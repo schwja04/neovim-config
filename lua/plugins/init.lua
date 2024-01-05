@@ -5,19 +5,20 @@ return {
         event = "VeryLazy",
     },
     { "github/copilot.vim" },
-    { "mbbill/undotree", },
     {
-        "nvim-telescope/telescope.nvim",
-        tag = "0.1.5",
-        dependencies = {
-            "nvim-lua/plenary.nvim"
-        },
+        "mbbill/undotree",
+        config = function()
+            vim.keymap.set("n", "<leader>u", vim.cmd.UndoTreeToggle)
+        end
     },
     {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
+        "numToStr/Comment.nvim",
+        opts = {}
     },
-    { "nvim-treesitter/nvim-treesitter-context" },
-    { "numToStr/Comment.nvim", opts = {} },
-    { "tpope/vim-fugitive" },
+    {
+        "tpope/vim-fugitive",
+        config = function()
+            vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
+        end
+    },
 }
