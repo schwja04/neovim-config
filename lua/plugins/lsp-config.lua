@@ -24,15 +24,11 @@ local function configure_lsp()
     require("mason").setup({})
     require("mason-lspconfig").setup({
         ensure_installed = {
-            "ansiblels",
-            "bashls",
             "csharp_ls",
-            "eslint",
             "gopls",
             "lua_ls",
             "pylsp",
             "rust_analyzer",
-            "tsserver"
         },
         handlers = {
             function(server)
