@@ -28,6 +28,7 @@ local function configure_lsp()
             "bashls",
             "csharp_ls",
             "eslint",
+            "gopls",
             "lua_ls",
             "pylsp",
             "rust_analyzer",
@@ -37,6 +38,17 @@ local function configure_lsp()
             function(server)
                 lspconfig[server].setup({
                     capabilities = lsp_capabitilies,
+                })
+            end,
+            csharp_ls = function()
+                lspconfig.csharp_ls.setup({
+                    capabilities = lsp_capabitilies,
+                    cmd = { "csharp-ls" },
+                    filetypes = { "cs" },
+                    init_options = {
+                        AutomaticFormatOnSave = true,
+                        AutomaticWorkspaceInit = true,
+                    },
                 })
             end,
             lua_ls = function()
