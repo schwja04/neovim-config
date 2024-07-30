@@ -8,7 +8,7 @@ return {
         "3rd/image.nvim", -- Optional image support
     },
     lazy = false,
-    config = function ()
+    config = function()
         require("neo-tree").setup({
             filesystem = {
                 filtered_items = {
@@ -28,6 +28,6 @@ return {
                 },
             },
         })
-        vim.keymap.set("n", "<leader>n", ":Neotree filesystem reveal left<CR>")
+        vim.keymap.set("n", "<leader>n", ":Neotree filesystem toggle left<CR>")
     end,
 }
