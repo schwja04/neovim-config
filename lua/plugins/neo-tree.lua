@@ -5,7 +5,7 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
-        "3rd/image.nvim", -- Optional image support
+        -- "3rd/image.nvim", -- Optional image support
     },
     lazy = false,
     config = function()
@@ -29,5 +29,21 @@ return {
             },
         })
         vim.keymap.set("n", "<leader>n", ":Neotree filesystem toggle left<CR>")
+
+        require("neo-tree").setup({
+            event_handlers = {
+
+                {
+                    event = "file_open_requested",
+                    handler = function()
+                        -- auto close
+                        -- vimc.cmd("Neotree close")
+                        -- OR
+                        require("neo-tree.command").execute({ action = "close" })
+                    end
+                },
+
+            }
+        })
     end,
 }
