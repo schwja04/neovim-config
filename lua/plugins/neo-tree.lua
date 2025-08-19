@@ -12,8 +12,10 @@ return {
         require("neo-tree").setup({
             filesystem = {
                 filtered_items = {
+                    visible = true,
                     hide_dotfiles = false,
                     always_show = {
+                        ".github",
                         ".env",
                         ".gitignore",
                         ".air.toml",
@@ -36,9 +38,6 @@ return {
                 {
                     event = "file_open_requested",
                     handler = function()
-                        -- auto close
-                        -- vimc.cmd("Neotree close")
-                        -- OR
                         require("neo-tree.command").execute({ action = "close" })
                     end
                 },

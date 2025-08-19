@@ -25,10 +25,9 @@ local function configure_lsp()
     require("mason-lspconfig").setup({
         ensure_installed = {
             "csharp_ls",
-            -- "gopls",
+            "gopls",
             "lua_ls",
             "pylsp",
-            "rust_analyzer",
         },
         handlers = {
             function(server)
