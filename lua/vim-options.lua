@@ -43,6 +43,11 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     group = JaCodeGroup,
     pattern = "*",
     callback = function()
-        vim.lsp.buf.format()
+        local ok, conform = pcall(require, "conform")
+        if ok then
+            conform.format({ lsp_fallback = true })
+        else
+            vim.lsp.buf.format()
+        end
     end
 })

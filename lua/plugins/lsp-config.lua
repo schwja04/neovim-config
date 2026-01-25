@@ -28,6 +28,7 @@ local function configure_lsp()
             "gopls",
             "lua_ls",
             "pylsp",
+            "ts_ls",
         },
         -- mason-lspconfig will otherwise call vim.lsp.enable() for installed
         -- servers (Neovim 0.11+), which can start a *second* lua_ls instance
@@ -84,6 +85,9 @@ local function configure_lsp()
         capabilities = lsp_capabilities,
     })
 
+    lspconfig.ts_ls.setup({
+        capabilities = lsp_capabilities,
+    })
 
     local cmp = require("cmp")
     local cmp_select = { behavior = cmp.SelectBehavior.Select }
