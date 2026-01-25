@@ -18,7 +18,7 @@ local function configure_lsp()
     })
 
     local lspconfig = require("lspconfig")
-    local lsp_capabitilies = require("cmp_nvim_lsp").default_capabilities()
+    local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 
     require("mason").setup({})
@@ -29,55 +29,59 @@ local function configure_lsp()
             "lua_ls",
             "pylsp",
         },
-        handlers = {
-            function(server)
-                lspconfig[server].setup({
-                    capabilities = lsp_capabitilies,
-                })
-            end,
-            csharp_ls = function()
-                lspconfig.csharp_ls.setup({
-                    capabilities = lsp_capabitilies,
-                    cmd = { "csharp-ls" },
-                    filetypes = { "cs" },
-                    init_options = {
-                        AutomaticFormatOnSave = true,
-                        AutomaticWorkspaceInit = true,
-                    },
-                })
-            end,
-            lua_ls = function()
-                lspconfig.lua_ls.setup({
-                    capabilities = lsp_capabitilies,
-                    settings = {
-                        Lua = {
-                            runtime = {
-                                version = "LuaJIT",
-                            },
-                            diagnostics = {
-                                globals = { "vim" },
-                            },
-                            workplaces = {
-                                vim.env.VIMRUNTIME,
-                            },
-                        },
-                    },
-                })
-            end,
-            gopls = function()
-                lspconfig.gopls.setup({
-                    capabilities = lsp_capabitilies,
-                    settings = {
-                        gopls = {
-                            analyses = {
-                                unusedparams = true,
-                            },
-                            staticcheck = true,
-                        },
-                    },
-                })
-            end,
-        }
+        -- mason-lspconfig will otherwise call vim.lsp.enable() for installed
+        -- servers (Neovim 0.11+), which can start a *second* lua_ls instance
+        -- without our lspconfig settings.
+        automatic_enable = false,
+    })
+
+    -- Your mason-lspconfig version doesn't support setup_handlers.
+    -- Configure servers directly instead.
+    lspconfig.csharp_ls.setup({
+        capabilities = lsp_capabilities,
+        cmd = { "csharp-ls" },
+        filetypes = { "cs" },
+        init_options = {
+            AutomaticFormatOnSave = true,
+            AutomaticWorkspaceInit = true,
+        },
+    })
+
+    lspconfig.gopls.setup({
+        capabilities = lsp_capabilities,
+        settings = {
+            gopls = {
+                analyses = {
+                    unusedparams = true,
+                },
+                staticcheck = true,
+            },
+        },
+    })
+
+    lspconfig.lua_ls.setup({
+        capabilities = lsp_capabilities,
+        settings = {
+            Lua = {
+                runtime = {
+                    version = "LuaJIT",
+                },
+                diagnostics = {
+                    globals = { "vim" },
+                },
+                workspace = {
+                    library = vim.api.nvim_get_runtime_file("", true),
+                    checkThirdParty = false,
+                },
+                telemetry = {
+                    enable = false,
+                },
+            },
+        },
+    })
+
+    lspconfig.pylsp.setup({
+        capabilities = lsp_capabilities,
     })
 
 
@@ -114,6 +118,7 @@ return {
             -- LSP Support
             { "williamboman/mason.nvim", },
             { "williamboman/mason-lspconfig.nvim", },
+            { "folke/neodev.nvim" },
 
             -- Autocompletions
             { "hrsh7th/nvim-cmp", },
@@ -130,7 +135,8 @@ return {
             },
             { "rafamadriz/friendly-snippets", },
         },
-        lazy_load = false,
+        priority = 900,
+        lazy = false,
         config = function()
             configure_lsp()
         end,
