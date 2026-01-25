@@ -1,6 +1,8 @@
 local function configure_lsp()
+    local lsp_attach_group = vim.api.nvim_create_augroup("JaLspAttach", { clear = true })
     vim.api.nvim_create_autocmd("LspAttach", {
         desc = "LSP keybindings",
+        group = lsp_attach_group,
         callback = function(event)
             local opts = { buffer = event.buf, remap = false }
 
