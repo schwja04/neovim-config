@@ -64,6 +64,19 @@ local function configure_lsp()
                     },
                 })
             end,
+            gopls = function()
+                lspconfig.gopls.setup({
+                    capabilities = lsp_capabitilies,
+                    settings = {
+                        gopls = {
+                            analyses = {
+                                unusedparams = true,
+                            },
+                            staticcheck = true,
+                        },
+                    },
+                })
+            end,
         }
     })
 
