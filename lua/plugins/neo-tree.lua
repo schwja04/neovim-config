@@ -12,20 +12,21 @@ return {
         require("neo-tree").setup({
             filesystem = {
                 filtered_items = {
-                    visible = true,
+                    visible = false,
                     hide_dotfiles = false,
                     always_show = {
-                        ".github/",
+                        ".github",
                         ".env",
                         ".gitignore",
                         ".air.toml",
+                        "*.tfvars",
                     },
                     never_show = {
-                        ".git/",
-                        "node_modules/",
-                        ".cache/",
-                        ".vscode/",
-                        ".vs/",
+                        ".git",
+                        "node_modules",
+                        ".cache",
+                        ".vscode",
+                        ".vs",
                     },
                 },
             },

@@ -31,6 +31,7 @@ local function configure_lsp()
             "lua_ls",
             "pylsp",
             "ts_ls",
+            "terraformls",
         },
         -- mason-lspconfig will otherwise call vim.lsp.enable() for installed
         -- servers (Neovim 0.11+), which can start a *second* lua_ls instance
@@ -84,6 +85,10 @@ local function configure_lsp()
     })
 
     lspconfig.pylsp.setup({
+        capabilities = lsp_capabilities,
+    })
+
+    lspconfig.terraformls.setup({
         capabilities = lsp_capabilities,
     })
 

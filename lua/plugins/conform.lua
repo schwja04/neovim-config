@@ -17,6 +17,10 @@ return {
                 scss = { "prettierd", "prettier", stop_after_first = true },
                 markdown = { "prettierd", "prettier", stop_after_first = true },
                 mdx = { "prettierd", "prettier", stop_after_first = true },
+                terraform = { "terraform_fmt" },
+                hcl = { "terraform_fmt" },
+                tf = { "terraform_fmt" },
+                ["terraform-vars"] = { "terraform_fmt" },
             },
             formatters = {
                 prettier = {
@@ -25,6 +29,10 @@ return {
                 prettierd = {
                     prefer_local = "node_modules/.bin",
                 },
+            },
+            format_on_save = {
+                timeout_ms = 500,
+                lsp_format = "fallback",
             },
         },
     },
