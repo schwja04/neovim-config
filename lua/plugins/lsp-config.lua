@@ -19,7 +19,6 @@ local function configure_lsp()
         end,
     })
 
-    local lspconfig = require("lspconfig")
     local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 
@@ -39,9 +38,8 @@ local function configure_lsp()
         automatic_enable = false,
     })
 
-    -- Your mason-lspconfig version doesn't support setup_handlers.
-    -- Configure servers directly instead.
-    lspconfig.csharp_ls.setup({
+    -- Configure servers via the Neovim 0.11+ API (nvim-lspconfig "framework" is deprecated).
+    vim.lsp.config("csharp_ls", {
         capabilities = lsp_capabilities,
         cmd = { "csharp-ls" },
         filetypes = { "cs" },
@@ -51,7 +49,7 @@ local function configure_lsp()
         },
     })
 
-    lspconfig.gopls.setup({
+    vim.lsp.config("gopls", {
         capabilities = lsp_capabilities,
         settings = {
             gopls = {
@@ -63,7 +61,7 @@ local function configure_lsp()
         },
     })
 
-    lspconfig.lua_ls.setup({
+    vim.lsp.config("lua_ls", {
         capabilities = lsp_capabilities,
         settings = {
             Lua = {
@@ -84,16 +82,25 @@ local function configure_lsp()
         },
     })
 
-    lspconfig.pylsp.setup({
+    vim.lsp.config("pylsp", {
         capabilities = lsp_capabilities,
     })
 
-    lspconfig.terraformls.setup({
+    vim.lsp.config("terraformls", {
         capabilities = lsp_capabilities,
     })
 
-    lspconfig.ts_ls.setup({
+    vim.lsp.config("ts_ls", {
         capabilities = lsp_capabilities,
+    })
+
+    vim.lsp.enable({
+        "csharp_ls",
+        "gopls",
+        "lua_ls",
+        "pylsp",
+        "terraformls",
+        "ts_ls",
     })
 
     local cmp = require("cmp")
